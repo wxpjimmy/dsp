@@ -1,0 +1,22 @@
+hash: 36ad7a0136be68a910d525dfd78646153d4d3005b8151a5df0fe08f05a38b19d
+updated: 2018-01-21T23:53:11.730178+08:00
+imports:
+- name: github.com/astaxie/beego
+  version: bf5c5626ab429e66d88602e1ab1ab5fbf4629a01
+  subpackages:
+  - logs
+- name: github.com/influxdata/influxdb
+  version: 28f3912491a564677bfafc4602aa126023d1bfb2
+  subpackages:
+  - client
+  - models
+  - pkg/escape
+- name: github.com/json-iterator/go
+  version: f7279a603edee96fe7764d3de9c6ff8cf9970994
+  subpackages:
+  - extra
+- name: github.com/rcrowley/go-metrics
+  version: e181e095bae94582363434144c61a9653aff6e50
+- name: github.com/vrischmann/go-metrics-influxdb
+  version: 43af8332c303f62ef62663b02b3b7d8a9802002a
+testImports: []

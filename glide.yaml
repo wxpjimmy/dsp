@@ -1,0 +1,12 @@
+package: dsp_demo
+import:
+- package: github.com/astaxie/beego
+  version: v1.9.2
+  subpackages:
+  - logs
+- package: github.com/json-iterator/go
+  version: 1.0.4
+  subpackages:
+  - extra
+- package: github.com/rcrowley/go-metrics
+- package: github.com/vrischmann/go-metrics-influxdb
