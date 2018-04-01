@@ -47,7 +47,7 @@ func ConvertHaoMaiResponseToMiResponse(ir *model.HMResponse) *model.MiResponse {
 		d := convertHaoMaiSeatToMiSeat(&seat)
 		seats[idx] = *d
 	}
-	return model.MiResponse{
+	return &model.MiResponse{
 		ID: ir.ID,
 		SeatBids: seats,
 		Nbr: ir.Nbr,

@@ -60,7 +60,7 @@ func (s *DSPService) AdsHandler(w http.ResponseWriter, r *http.Request)  {
 						w.WriteHeader(http.StatusNoContent)
 						return
 					}
-					b, err := json.Marshal(*re)
+					b, err := json.Marshal(re)
 					if err != nil {
 						util.JsonStrResult(500, "Json encode failed: " + err.Error(), w)
 					} else {
