@@ -38,8 +38,11 @@ func ConvertMiImpToHMImp(imp *model.Imp) *model.HMImp {
 	return nil
 }
 
-func ConvertHaoMaiResponseToMiResponse(ir *model.HMResponse) model.MiResponse {
-	var seats []model.SeatBid
+func ConvertHaoMaiResponseToMiResponse(ir *model.HMResponse) *model.MiResponse {
+	if ir ==nil {
+		return nil
+	}
+	var seats = make([]model.SeatBid, len(ir.SeatBids))
 	for idx,seat := range ir.SeatBids {
 		d := convertHaoMaiSeatToMiSeat(&seat)
 		seats[idx] = *d
@@ -52,7 +55,10 @@ func ConvertHaoMaiResponseToMiResponse(ir *model.HMResponse) model.MiResponse {
 }
 
 func convertHaoMaiSeatToMiSeat(is *model.HaoMaiSeatBid) *model.SeatBid {
-	var bids []model.Bid
+	if is == nil {
+		return nil
+	}
+	var bids = make([]model.Bid, len(is.Bids))
 	for idx,bid := range is.Bids {
 		d := convertHaoMaiBidToMiBid(&bid)
 		bids[idx] = *d
@@ -79,11 +85,16 @@ func convertHaoMaiBidToMiBid(internal *model.HaoMaiBid) *model.Bid {
 		logs.Info(buffer.Cap())
 		adm = strings.TrimSpace(string(buffer.Bytes()))
 	}
-	tid := model.GetTrafficConfBySrcAndSlotId("xiaomi", internal.Tagid).SspTemplateId
+	conf := model.GetTrafficConfBySrcAndSlotId("xiaomi", internal.Tagid)
+	tid := conf.SspTemplateId
+	price := internal.Price
+	if conf.Price != 0 {
+		price = float32(conf.Price)
+	}
 	return &model.Bid{
 		ID: internal.ID,
 		Impid: internal.Impid,
-		Price: internal.Price,
+		Price: price,
 		Adid: internal.Adid,
 		Adm: adm,
 		Tagid: internal.Tagid,

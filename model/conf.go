@@ -40,7 +40,7 @@ type TrafficTemplate struct {
 type TrafficConf struct {
 	SlotId string `json:"slot_id"`
 	SspTemplateId string `json:"ssp_template_id"`
-	Price int64 `json:"price"`
+	Price float64 `json:"price"`
 	Templates []*TrafficTemplate `json:"templates"`
 }
 

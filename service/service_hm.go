@@ -37,7 +37,7 @@ func (s *DSPService) AdsHandler(w http.ResponseWriter, r *http.Request)  {
 		return
 	}
 
-	c := make(chan *model.HMResponse)
+	c := make(chan interface{})
 	//get token
 	if Limit() {
 		//release the token
@@ -131,7 +131,7 @@ func (s *DSPService) ConfHandler(w http.ResponseWriter, r *http.Request) {
 	util.JsonResult(200, b, w)
 }
 
-func (s *DSPService) HandleAdsRequest(r *http.Request, ch chan *model.HMResponse) {
+func (s *DSPService) HandleAdsRequest(r *http.Request, ch chan interface{}) {
 	s.WaitGroup.Add(1)
 	defer func() {
 		if err:=recover();err!=nil{
@@ -165,6 +165,10 @@ func (s *DSPService) HandleAdsRequest(r *http.Request, ch chan *model.HMResponse
 			dsp := dsp.GetDsp(dspConfs[0].Name)
 
 			re := dsp.GetAds(hmRequest, dspConfs[0])
+			var dt *model.MiResponse
+			if re!=nil {
+				dt = converter.ConvertHaoMaiResponseToMiResponse(re)
+			}
 			cost := time.Now().Sub(start)
 			logs.Info("Cost: ", cost)
 
@@ -172,7 +176,7 @@ func (s *DSPService) HandleAdsRequest(r *http.Request, ch chan *model.HMResponse
 				logs.Error("Unmarshal failed", err)
 				close(ch)
 			} else {
-				ch <- re
+				ch <- &dt
 			}
 		} else {
 			logs.Error("Parse request failed!", err)
