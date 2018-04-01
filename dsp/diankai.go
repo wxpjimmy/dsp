@@ -12,6 +12,7 @@ import (
 	"dsp_demo/converter"
 	"time"
 	"github.com/astaxie/beego/logs"
+	"strings"
 )
 
 const (
@@ -131,9 +132,12 @@ func (r *DianKaiRequest) toString() string {
 	if r.Network.ip != "" {
 		req_url += "&ip=" + r.Network.ip
 	}
-	if r.Device.android_id != "" {
-		req_url += "&android_id=" + r.Device.android_id
+	android_id := "0123456789abcdef" //use default android id if not exist! consider to shuffle later
+	real_android_id := strings.TrimSpace(r.Device.android_id)
+	if  real_android_id!= "" {
+		android_id = real_android_id
 	}
+	req_url += "&android_id=" + android_id
 	req_url += "&ua=" + url.QueryEscape(ua)
 	if r.Device.sn != "" {
 		req_url += "&sn=" + r.Device.sn
