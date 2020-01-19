@@ -1,6 +1,6 @@
 package model
 
-//request interface with xiaomi
+//request interface 
 type Template struct {
 	ID string `json:"id"`
 	Width int32 `json:"width"`
@@ -44,7 +44,7 @@ type FrequencyCapping struct {
 	Hourly int32 `json:"hourly"`
 }
 
-//response interface with xiaomi
+//response interface 
 type Bid struct {
 	ID string `json:"id"`
 	Impid string `json:"impid"`
